@@ -9,10 +9,10 @@ class MycliApp < Formula
   
   if Hardware::CPU.arm?
     url "#{base_url}/mycli-#{version}-macos-arm64.tar.gz"
-    sha256 "b7b7b38e23dae6cc94240ddf31bc7f06aab19a250e330fa87561e14ab5932a71"
+    sha256 "0c9be40aa81cd34e494ef5df4bd592069cfdf6b334b16fdc81b6836e237095cc"
   else
     url "#{base_url}/mycli-#{version}-macos-x86_64.tar.gz"
-    sha256 "fb84bc67f56e57bfa37103d27a9cb1652acfca3c4c4dd4df7ef2b29fcef88c94"
+    sha256 "898e1e23437a587cd6f7e5894b647a7fa804262a64877930929a50c054660553"
   end
 
   def install
