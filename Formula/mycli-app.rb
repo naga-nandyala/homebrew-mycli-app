@@ -2,17 +2,17 @@
 class MycliApp < Formula
   desc "Simple Azure-like CLI tool by Naga"
   homepage "https://github.com/naga-nandyala/mycli-app"
-  version "0.1.0"
+  version "0.1.1"
   license "MIT"
 
   base_url = "https://github.com/naga-nandyala/mycli-app/releases/download/v#{version}"
   
   if Hardware::CPU.arm?
     url "#{base_url}/mycli-#{version}-macos-arm64.tar.gz"
-    sha256 "b73d2935e4bb1e35af4728f414b6f403f7715648406a64d857f80f718b939427"
+    sha256 "b70c19ce802883369ee44755aae38e690ec1275f5020244ff3cd25bbdd50a8eb"
   else
     url "#{base_url}/mycli-#{version}-macos-x86_64.tar.gz"
-    sha256 "b46cc0d122e2321d9d86bb602374e5c1613f0aadbb8a937442248b2e12f0418d"
+    sha256 "b0910462afdbf71861d63df5387e03aa473b1374eb2bb705528ce85ab966caed"
   end
 
   def install
