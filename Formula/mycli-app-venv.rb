@@ -9,10 +9,10 @@ class MycliAppVenv < Formula
   
   if Hardware::CPU.arm?
     url "#{base_url}/mycli-arm64-1.0.0-arm64.tar.gz"
-    sha256 "5372a18a44b529a3d377464b6f5ad7cb7b33dd7c380785ae22bdab5bb377d793"
+    sha256 "22c07959c4aff83a831283c05a5401066a69a721842d88c31f41180113e7d01e"
   else
     url "#{base_url}/mycli-arm64-1.0.0-x86_64.tar.gz"
-    sha256 "89271f3835639c6812c5c4bad1293acbf366e641c12cf1a04bdc7e5c088eb8aa"
+    sha256 "ce23ef824fc24c75d56e21f39ce35381ac4cbad35c87a7b7d4f52195cb008dc6"
   end
 
   def install
