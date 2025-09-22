@@ -99,8 +99,8 @@ class MycliAppSrc < Formula
   end
 
   resource "pymsalruntime" do
-    url "https://files.pythonhosted.org/packages/f0/8c/2c4f1a2a4b0c1e7f1d0a8a5f8e4c2b9e7a6b1a7c0a8a8b8c8d8e8f8a8b8/pymsalruntime-0.18.1-cp312-cp312-macosx_14_0_arm64.whl"
-    sha256 "TBD"
+    url "https://files.pythonhosted.org/packages/ce/04/2ddcbccab3c3deb6038df5fed00c485bd95353dc1d688e5f8241e039721d/pymsalruntime-0.18.1-cp310-cp310-macosx_14_0_arm64.whl"
+    sha256 "0c22e2e83faa10de422bbfaacc1bb2887c9025ee8a53f0fc2e4f7db01c4a7b66"
   end
 
   resource "requests" do
@@ -138,7 +138,7 @@ class MycliAppSrc < Formula
 
     # Install pymsalruntime binary wheel separately using direct wheel installation
     if resources.any? { |r| r.name == "pymsalruntime" }
-      system venv.root/"bin/pip", "install", "--no-deps", resource("pymsalruntime").cached_download
+      system libexec/"bin/pip", "install", "--no-deps", resource("pymsalruntime").cached_download
     end
 
     # Install the main application
