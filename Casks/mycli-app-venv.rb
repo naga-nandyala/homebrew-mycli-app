@@ -35,9 +35,4 @@ cask "mycli-app-venv" do
     For the PyInstaller variant use:
       brew install naga-nandyala/mycli-app/mycli-app
   EOS
-
-  test do
-    assert_match "MyCliApp version", shell_output("mycli --version")
-  end
 end
-# Regenerated: 2025-09-22T23:32:33Z
