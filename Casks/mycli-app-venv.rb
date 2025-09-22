@@ -5,13 +5,13 @@ cask "mycli-app-venv" do
   on_arm do
     sha256 "c0b863fa3e6f983b92e7f293baeb3c5b4342f815456a02a6069795e726fc05fb"
     url "https://github.com/naga-nandyala/mycli-app/releases/download/v#{version}/mycli-arm64-1.0.0-arm64.tar.gz"
-    binary "mycli", target: "mycli"
+    binary "mycli-arm64/bin/mycli", target: "mycli"
   end
 
   on_intel do
     sha256 "2141f2ba8a35239ddd83bde90f03f62e87105b51943d51a135563510061ec547"
     url "https://github.com/naga-nandyala/mycli-app/releases/download/v#{version}/mycli-x86_64-1.0.0-x86_64.tar.gz"
-    binary "mycli", target: "mycli"
+    binary "mycli-x86_64/bin/mycli", target: "mycli"
   end
 
   name "MyCLI App (Venv Bundle)"
