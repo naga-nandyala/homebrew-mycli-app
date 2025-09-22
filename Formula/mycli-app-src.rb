@@ -133,10 +133,10 @@ class MycliAppSrc < Formula
     # Install the main application
     venv.pip_install buildpath
 
-    # Create the CLI wrapper script
+    # Create the CLI wrapper script using proper entry point
     (bin/"mycli").write <<~SHELL
       #!/usr/bin/env bash
-      PYTHONPATH="#{libexec}/lib/python3.12/site-packages" #{libexec}/bin/python -m mycli_app.cli "$@"
+      exec "#{libexec}/bin/mycli" "$@"
     SHELL
 
     # Generate shell completions if supported
@@ -160,20 +160,34 @@ class MycliAppSrc < Formula
       This is the source-based installation of mycli-app, which builds from source
       and manages dependencies through Homebrew's Python virtual environment system.
       
-      Features:
+      🎯 Features:
       - Built from source for maximum compatibility
       - Dependencies managed by Homebrew
-      - Azure authentication with MSAL support
+      - Azure authentication with MSAL broker support
+      - Native broker authentication capabilities
       - Automatic updates through Homebrew
       
-      Benefits of this approach:
+      🔐 Authentication Methods Available:
+      - Browser-based authentication (default)
+      - Device code authentication (--use-device-code)
+      - Native broker authentication (enhanced security)
+      
+      🚀 For Enhanced Broker Authentication on macOS:
+      1. Install Microsoft Company Portal from the App Store
+      2. Enable Touch ID in System Preferences
+      3. Run: mycli broker  # Check broker status
+      4. Run: mycli login --broker  # Use broker authentication
+      
+      ✨ Benefits of this approach:
       - Smaller download size
       - Better integration with system Python
       - Easier dependency management
       - Automatic security updates for dependencies
+      - Native broker support with pymsalruntime
       
-      To use Azure authentication features, run:
-        mycli --help
+      📱 To test broker functionality:
+        mycli broker          # Check broker capabilities
+        mycli login --broker  # Use broker authentication
         
       For the alternative venv bundle version, install:
         brew install naga-nandyala/mycli-app/mycli-app-venv
