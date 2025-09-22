@@ -40,4 +40,4 @@ cask "mycli-app-venv" do
     assert_match "MyCliApp version", shell_output("mycli --version")
   end
 end
-# Regenerated: 2025-09-22T23:25:41Z
+# Regenerated: 2025-09-22T23:32:33Z
