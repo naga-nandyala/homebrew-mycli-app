@@ -124,35 +124,55 @@ class MycliAppSrc < Formula
   end
 
 
+  # def install
+  #   # Ensure that the `openssl` crate picks up the intended library for cryptography
+  #   ENV["OPENSSL_DIR"] = Formula["openssl@3"].opt_prefix
+  #   ENV["OPENSSL_NO_VENDOR"] = "1"
+
+  #   # Create virtual environment
+  #   venv = virtualenv_create(libexec, "python3.12", system_site_packages: false)
+    
+  #   # Install source-available dependencies first (excluding binary wheels)
+  #   # This follows the AWS CLI pattern for handling binary-only packages
+  #   venv.pip_install resources.reject { |r| r.name == "pymsalruntime" }
+
+  #   # Install pymsalruntime binary wheel separately using direct wheel installation
+  #   if resources.any? { |r| r.name == "pymsalruntime" }
+  #     pymsalruntime_wheel = resource("pymsalruntime").cached_download
+  #     system venv.root/"bin/pip", "install", "--no-deps", pymsalruntime_wheel, exception: true
+  #   end
+
+  #   # Install the main application
+  #   venv.pip_install buildpath
+
+  #   # Create the CLI wrapper script using proper entry point
+  #   (bin/"mycli").write <<~SHELL
+  #     #!/usr/bin/env bash
+  #     exec "#{libexec}/bin/mycli" "$@"
+  #   SHELL
+
+  #   # Generate shell completions if supported
+  #   # generate_completions_from_executable(bin/"mycli", "--completion", base_name: "mycli")
+  # end
   def install
-    # Ensure that the `openssl` crate picks up the intended library for cryptography
+    # Ensure correct openssl path for cryptography and other native deps
     ENV["OPENSSL_DIR"] = Formula["openssl@3"].opt_prefix
     ENV["OPENSSL_NO_VENDOR"] = "1"
-
-    # Create virtual environment
-    venv = virtualenv_create(libexec, "python3.12", system_site_packages: false)
-    
-    # Install source-available dependencies first (excluding binary wheels)
-    # This follows the AWS CLI pattern for handling binary-only packages
+  
+    # Create a Homebrew virtualenv (always use brewed Python)
+    venv = virtualenv_create(libexec, "python3.12")
+  
+    # First install all source-based resources EXCEPT pymsalruntime
     venv.pip_install resources.reject { |r| r.name == "pymsalruntime" }
-
-    # Install pymsalruntime binary wheel separately using direct wheel installation
-    if resources.any? { |r| r.name == "pymsalruntime" }
-      pymsalruntime_wheel = resource("pymsalruntime").cached_download
-      system venv.root/"bin/pip", "install", "--no-deps", pymsalruntime_wheel, exception: true
-    end
-
-    # Install the main application
-    venv.pip_install buildpath
-
-    # Create the CLI wrapper script using proper entry point
-    (bin/"mycli").write <<~SHELL
-      #!/usr/bin/env bash
-      exec "#{libexec}/bin/mycli" "$@"
-    SHELL
-
-    # Generate shell completions if supported
-    # generate_completions_from_executable(bin/"mycli", "--completion", base_name: "mycli")
+  
+    # Now install the binary wheel resource directly (pip install <wheel path>)
+    wheel = resource("pymsalruntime").cached_download
+    venv.pip_install wheel
+  
+    # Finally, install your CLI’s main source code
+    venv.pip_install_and_link buildpath
+  
+    # Optionally generate a wrapper script or completions if needed
   end
 
   test do
