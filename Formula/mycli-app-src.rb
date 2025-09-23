@@ -154,26 +154,20 @@ class MycliAppSrc < Formula
   #   # Generate shell completions if supported
   #   # generate_completions_from_executable(bin/"mycli", "--completion", base_name: "mycli")
   # end
-  def install
-    # Ensure correct openssl path for cryptography and other native deps
-    ENV["OPENSSL_DIR"] = Formula["openssl@3"].opt_prefix
-    ENV["OPENSSL_NO_VENDOR"] = "1"
-  
-    # Create a Homebrew virtualenv (always use brewed Python)
-    venv = virtualenv_create(libexec, "python3.12")
-  
-    # First install all source-based resources EXCEPT pymsalruntime
-    venv.pip_install resources.reject { |r| r.name == "pymsalruntime" }
-  
-    # Now install the binary wheel resource directly (pip install <wheel path>)
-    wheel = resource("pymsalruntime").cached_download
-    venv.pip_install wheel
-  
-    # Finally, install your CLI’s main source code
-    venv.pip_install_and_link buildpath
-  
-    # Optionally generate a wrapper script or completions if needed
-  end
+def install
+  venv = virtualenv_create(libexec, "python3.12")
+  venv.pip_install resources.reject { |r| r.name == "pymsalruntime" }
+
+  # Fix: Rename wheel file to correct format for pip
+  pymsal_wheel = resource("pymsalruntime").cached_download
+  correct_name = "pymsalruntime-0.18.1-cp312-cp312-macosx_14_0_arm64.whl"
+  cp pymsal_wheel, correct_name
+
+  venv.pip_install Pathname.pwd/correct_name
+
+  venv.pip_install_and_link buildpath
+end
+
 
   test do
     # Test basic functionality
