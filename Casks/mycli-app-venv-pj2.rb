@@ -3,13 +3,13 @@ cask "mycli-app-venv-pj2" do
   version "1.0.0"
 
   on_arm do
-    sha256 "ac37502d88340700e5120187f2db0b3d9a7d6d3f863542cccfc99cac22ecfd7e"
+    sha256 "6ab045c32e0afa03efe65d9048864721e2751e8066964ce47f44e7c3a2572dfc"
     url "https://github.com/naga-nandyala/pj2/releases/download/v#{version}/mycli-1.0.0-macos-arm64.tar.gz"
     binary "bin/mycli", target: "mycli"
   end
 
   on_intel do
-    sha256 "a60031b75a87bd8ed130f2c1046f9451b225573bcf55964159eb4f7c89a0e06d"
+    sha256 "b61c5e078c78bbe50f9ef98e4f271be1b536bfbd5b6cbaad3accc284e686d9b6"
     url "https://github.com/naga-nandyala/pj2/releases/download/v#{version}/mycli-1.0.0-macos-x86_64.tar.gz"
     binary "bin/mycli", target: "mycli"
   end
