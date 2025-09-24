@@ -5,13 +5,13 @@ cask "mycli-app-venv-pj2" do
   on_arm do
     sha256 "c635d741dc1a04f90ae8115b4b2335202d58c1eb16449e7909f41f0a0c7b8275"
     url "https://github.com/naga-nandyala/pj2/releases/download/v#{version}/mycli-1.0.0-macos-arm64.tar.gz"
-    binary "bin/mycli", target: "mycli"
+    binary "libexec/mycli-venv/bin/mycli", target: "mycli"
   end
 
   on_intel do
     sha256 "72c6d3357235440ed46453b4c1444dab7af896c174b1fd8af70c3160c4db303d"
     url "https://github.com/naga-nandyala/pj2/releases/download/v#{version}/mycli-1.0.0-macos-x86_64.tar.gz"
-    binary "bin/mycli", target: "mycli"
+    binary "libexec/mycli-venv/bin/mycli", target: "mycli"
   end
 
   name "MyCLI App (venv bundle)"
@@ -19,21 +19,6 @@ cask "mycli-app-venv-pj2" do
   homepage "https://github.com/naga-nandyala/pj2"
 
   depends_on macos: ">= :catalina"
-
-  # Fix the launcher script to use the venv's mycli directly
-  postflight do
-    launcher_path = "#{staged_path}/bin/mycli"
-    File.open(launcher_path, "w") do |f|
-      f.write <<~EOF
-        #!/usr/bin/env bash
-        set -euo pipefail
-        SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-        APP_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-        exec "${APP_ROOT}/libexec/mycli-venv/bin/mycli" "$@"
-      EOF
-    end
-    system_command "/bin/chmod", args: ["+x", launcher_path]
-  end
 
   caveats <<~EOS
     Installs a portable Python virtual environment containing all dependencies.
