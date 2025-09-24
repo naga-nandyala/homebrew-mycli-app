@@ -3,12 +3,12 @@ cask "mycli-app-pkg-pj2" do
   version "1.0.0"
 
   on_arm do
-    sha256 "dcb496e77f59c637101b7b09e7c227e976de7b6703408d7d538e40bee77427fc"
+    sha256 "e68399a4ffde7ef24ec1c42f5458a238b4035bf89ab54bd3dbe29b5241e08d50"
     url "https://github.com/naga-nandyala/pj2/releases/download/v1.0.0/mycli-1.0.0-macos-arm64.pkg"
   end
 
   on_intel do
-    sha256 "62f264ef4fb906c21c3b499e9236e245bbaf1cf52bfff1c2cb66dd500b6dd2a7"
+    sha256 "116ea1b3b282f15c4e9e313ce08ae2d9710daa0c9f0a66c348b60089624fe702"
     url "https://github.com/naga-nandyala/pj2/releases/download/v1.0.0/mycli-1.0.0-macos-x86_64.pkg"
   end
 
@@ -48,4 +48,4 @@ cask "mycli-app-pkg-pj2" do
       brew install --cask naga-nandyala/mycli-app/mycli-app-venv-pj2
   EOS
 end
-# Force updated: 2025-09-24T10:44:46Z
+# Force updated: 2025-09-24T10:50:58Z
