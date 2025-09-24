@@ -18,8 +18,13 @@ cask "mycli-app-pkg-pj2" do
 
   depends_on macos: ">= :catalina"
 
-  pkg on_arm: "mycli-1.0.0-macos-arm64.pkg",
-      on_intel: "mycli-1.0.0-macos-x86_64.pkg"
+  on_arm do
+    pkg "mycli-1.0.0-macos-arm64.pkg"
+  end
+
+  on_intel do
+    pkg "mycli-1.0.0-macos-x86_64.pkg"
+  end
 
   uninstall pkgutil: "com.naga-nandyala.mycli"
 
@@ -43,4 +48,3 @@ cask "mycli-app-pkg-pj2" do
       brew install --cask naga-nandyala/mycli-app/mycli-app-venv-pj2
   EOS
 end
-# Force updated: 2025-09-24T10:21:54Z
