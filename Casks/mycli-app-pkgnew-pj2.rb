@@ -11,16 +11,21 @@ cask "mycli-app-pkgnew-pj2" do
   desc "Azure-inspired CLI with native macOS installer"
   homepage "https://github.com/naga-nandyala/pj2"
 
+  livecheck do
+    url :url
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
+
   depends_on macos: ">= :catalina"
 
   pkg "mycli-#{version}-macos-#{arch}.pkg"
 
   uninstall pkgutil: "com.naga-nandyala.mycli"
 
-  livecheck do
-    url :url
-    regex(/^v?(\d+(?:\.\d+)+)$/i)
-  end
+  zap trash: [
+    "~/.mycli",
+    "~/.config/mycli",
+  ]
 
   caveats <<~EOS
     MyCLI installs directly to system locations:
@@ -38,9 +43,4 @@ cask "mycli-app-pkgnew-pj2" do
       sudo rm -f /usr/local/bin/mycli
       sudo rm -rf /usr/local/microsoft/mycli
   EOS
-
-  zap trash: [
-    "~/.mycli",
-    "~/.config/mycli",
-  ]
 end
