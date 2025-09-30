@@ -28,10 +28,15 @@ cask "mycli-app-pkg-pj2" do
 
   uninstall pkgutil: "com.naga-nandyala.mycli"
 
+  livecheck do
+    url :url
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
+
   caveats <<~EOS
     MyCLI installs directly to system locations:
       • Executable: /usr/local/bin/mycli
-      • Runtime: /usr/local/libexec/mycli-venv/
+      • Runtime: /usr/local/microsoft/mycli/
 
     No symlinks or complex path resolution required.
 
@@ -42,9 +47,11 @@ cask "mycli-app-pkg-pj2" do
 
     To uninstall manually:
       sudo rm -f /usr/local/bin/mycli
-      sudo rm -rf /usr/local/libexec/mycli-venv
-
-    For the venv bundle version instead:
-      brew install --cask naga-nandyala/mycli-app/mycli-app-venv-pj2
+      sudo rm -rf /usr/local/microsoft/mycli
   EOS
+
+  zap trash: [
+    "~/.mycli",
+    "~/.config/mycli",
+  ]
 end
