@@ -3,8 +3,8 @@ cask "mycli-app-pkgnew-pj2" do
   arch arm: "arm64", intel: "x86_64"
 
   version "4.0.0"
-  sha256 arm:   "e57712a5a3792d33e5cad883f5accd24c23843a921b8bae8cf8f1cfd30c8af4a",
-         intel: "51218ed196b47a9ad60dfe10d77d41803c7f6335f7f3cd79e13c54aca0d14bce"
+  sha256 arm:   "af729e30efbee3d8d76a920da8fe526ae5b9791a778a7933e79a10037df54938",
+         intel: "80f588f79043d623ad297264ee81604bf5ef9885678cafff40a3936c398aecf4"
 
   url "https://github.com/naga-nandyala/pj2/releases/download/v#{version}/mycli-#{version}-macos-#{arch}.pkg"
   name "MyCLI App (PKG Installer)"
