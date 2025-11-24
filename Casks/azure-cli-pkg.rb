@@ -19,7 +19,7 @@ cask "azure-cli-pkg" do
   depends_on macos: ">= :catalina"
 
   # Conflict with Homebrew formula version
-  conflicts_with formula: "azure-cli"
+  # conflicts_with formula: "azure-cli"
 
   pkg "azure-cli-#{version}-macos-#{arch}.pkg"
 
