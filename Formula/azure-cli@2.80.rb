@@ -1,4 +1,4 @@
-class AzureCli < Formula
+class AzureCliAT280 < Formula
   include Language::Python::Virtualenv
 
   desc "Microsoft Azure CLI 2.0"
