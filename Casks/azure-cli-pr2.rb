@@ -1,6 +1,6 @@
 cask "azure-cli-pr2" do
   version "3.0.0"
-  sha256 "814c3ed5af2a4e2ba110a21c849240bfe5862b285a95194e42b78b2097590d71"
+  sha256 "b06b0bbaa81f1a8453eca5b2eac67ae94c46057d08c4df49cf7b72473afb0275"
   
   url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v3.0.0-pr2/azure-cli-3.0.0-macos-arm64-notarized.pkg"
   name "Azure CLI (PR2 - Versioned)"
