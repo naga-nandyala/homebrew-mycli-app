@@ -4,7 +4,7 @@ cask "azure-cli-pr2" do
 
   url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v3.0.0-pr2/azure-cli-3.0.0-macos-arm64-notarized.pkg"
   name "Azure CLI"
-  desc "Azure CLI with versioned installation (notarized)
+  desc "Azure CLI with versioned installation (notarized)"
   homepage "https://github.com/naga-nandyala/azure-cli-pkg-1"
 
   pkg "azure-cli-3.0.0-macos-arm64-notarized.pkg"
