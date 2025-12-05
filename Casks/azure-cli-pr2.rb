@@ -7,7 +7,8 @@ cask "azure-cli-pr2" do
   desc "Microsoft Azure Command-Line Interface with versioned installation support"
   homepage "https://docs.microsoft.com/cli/azure/"
 
-  pkg "azure-cli-3.0.0-macos-arm64-notarized.pkg"
+  pkg "azure-cli-3.0.0-macos-arm64-notarized.pkg",
+      allow_untrusted: true
 
   postflight do
     # Display installation summary
