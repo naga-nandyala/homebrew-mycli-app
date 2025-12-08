@@ -1,14 +1,13 @@
 cask "azure-cli-pr2" do
   version "3.0.0"
-  sha256 "dfa66b34d53ec0e5702448efbc06c5c6bbdf7246f62f22dba0fa9c8c09355c31"
+  sha256 "c466d46cea2c86819ff5ebd8317acb0f8d693eb05e309bde9f7aac0f6768e551"
   
   url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v3.0.0-pr2/azure-cli-3.0.0-macos-arm64-notarized.pkg"
   name "Azure CLI (PR2 - Versioned)"
   desc "Microsoft Azure Command-Line Interface with versioned installation support"
   homepage "https://docs.microsoft.com/cli/azure/"
 
-  pkg "azure-cli-3.0.0-macos-arm64-notarized.pkg",
-      allow_untrusted: true
+  pkg "azure-cli-3.0.0-macos-arm64-notarized.pkg"
 
   postflight do
     # Display installation summary
