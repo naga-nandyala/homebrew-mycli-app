@@ -1,21 +1,27 @@
 cask "azure-cli-pr2" do
   version "3.0.0"
-  sha256 "c466d46cea2c86819ff5ebd8317acb0f8d693eb05e309bde9f7aac0f6768e551"
+  sha256 "326e2939e774ee7178d98d9da226b9c8917a104d41364a43b7fd5b1bffa2a60a"
   
   url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v3.0.0-pr2/azure-cli-3.0.0-macos-arm64-notarized.pkg"
   name "Azure CLI (PR2 - Versioned)"
   desc "Microsoft Azure Command-Line Interface with versioned installation support"
   homepage "https://docs.microsoft.com/cli/azure/"
 
-  pkg "azure-cli-3.0.0-macos-arm64-notarized.pkg",
-      allow_untrusted: true
+  pkg "azure-cli-3.0.0-macos-arm64-notarized.pkg"
 
   postflight do
-    # Display installation summary
+    # Ensure 'current' symlink exists and points to this version
     version_dir = "/usr/local/microsoft/azure-cli/#{version}"
     current_link = "/usr/local/microsoft/azure-cli/current"
     
     if File.directory?(version_dir)
+      # Create or update 'current' symlink if missing or pointing to different version
+      if !File.symlink?(current_link) || File.readlink(current_link) != version.to_s
+        File.delete(current_link) if File.exist?(current_link)
+        File.symlink(version.to_s, current_link)
+        puts "Created symlink: #{current_link} -> #{version}"
+      end
+      
       ohai "Azure CLI #{version} installed successfully"
       puts "Installation directory: #{version_dir}"
       
