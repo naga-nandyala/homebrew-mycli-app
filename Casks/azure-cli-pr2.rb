@@ -13,6 +13,7 @@ cask "azure-cli-pr2" do
     version_dir = "/usr/local/microsoft/azure-cli/#{version}"
     current_link = "/usr/local/microsoft/azure-cli/current"
     launcher = "/usr/local/bin/az"
+    python_bin = "#{current_link}/bin/python3"
 
     # Ensure installation directory exists
     unless File.directory?(version_dir)
@@ -35,6 +36,10 @@ cask "azure-cli-pr2" do
     end
     system_command "/bin/ln", args: ["-sf", "#{current_link}/bin/az", launcher], sudo: true
     ohai "Launcher script created: #{launcher} -> #{current_link}/bin/az"
+
+    # Fix shebang of az launcher to point to installed python
+    system_command "/usr/bin/env", args: ["sed", "-i", "''", "1s|.*|#!#{python_bin}|", "#{current_link}/bin/az"], sudo: true
+    ohai "Patched launcher shebang to: #{python_bin}"
 
     # Notify about other installed versions
     versions_dir = "/usr/local/microsoft/azure-cli"
