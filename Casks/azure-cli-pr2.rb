@@ -91,7 +91,7 @@ cask "azure-cli-pr2" do
       /usr/local/microsoft/azure-cli/#{version}/
 
     Active version symlink:
-      /usr/local/microsoft/azure-cli/current -> #{version}
+      /usr/local/microsoft/azure-cli/current -> /usr/local/microsoft/azure-cli/#{version}
 
     Launcher script:
       /usr/local/bin/az
@@ -103,8 +103,8 @@ cask "azure-cli-pr2" do
       sudo /usr/local/microsoft/azure-cli/cleanup-old-versions.sh
 
     To manually switch versions (advanced):
-      sudo ln -sf <version> /usr/local/microsoft/azure-cli/current
-      Example: sudo ln -sf 2.80.0 /usr/local/microsoft/azure-cli/current
+      sudo ln -sf /usr/local/microsoft/azure-cli/<version> /usr/local/microsoft/azure-cli/current
+      Example: sudo ln -sf /usr/local/microsoft/azure-cli/2.80.0 /usr/local/microsoft/azure-cli/current
 
     To verify installation:
       az --version
