@@ -4,14 +4,15 @@ cask "azure-cli-pr2" do
 
   url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v3.0.0-pr2/azure-cli-3.0.0-macos-arm64-notarized.pkg"
   name "Azure CLI (PR2 - Versioned)"
-  desc "Microsoft Azure Command-Line Interface with versioned installation support"
+  desc "Microsoft Azure CLI with versioned installation support"
   homepage "https://docs.microsoft.com/cli/azure/"
 
-  pkg "azure-cli-3.0.0-macos-arm64-notarized.pkg"
+  pkg "azure-cli-#{version}-macos-arm64-notarized.pkg"
 
   postflight do
     version_dir = "/usr/local/microsoft/azure-cli/#{version}"
     current_link = "/usr/local/microsoft/azure-cli/current"
+    launcher = "/usr/local/bin/az"
 
     # Ensure installation directory exists
     unless File.directory?(version_dir)
@@ -19,29 +20,36 @@ cask "azure-cli-pr2" do
       next
     end
 
-    # Remove existing symlink or file (if any)
+    # Remove existing 'current' symlink or file
     if File.symlink?(current_link) || File.exist?(current_link)
       system_command "/bin/rm", args: ["-f", current_link], sudo: true
     end
 
-    # Create new symlink pointing to this version
+    # Create symlink pointing to this version
     system_command "/bin/ln", args: ["-sf", version_dir, current_link], sudo: true
     ohai "Created symlink: #{current_link} -> #{version_dir}"
 
-    # Inform user
-    ohai "Azure CLI #{version} installed successfully"
-    puts "Installation directory: #{version_dir}"
-    puts "Active version symlink: #{current_link} -> #{version_dir}"
+    # Ensure launcher points to current version
+    if File.exist?(launcher) || File.symlink?(launcher)
+      system_command "/bin/rm", args: ["-f", launcher], sudo: true
+    end
+    system_command "/bin/ln", args: ["-sf", "#{current_link}/bin/az", launcher], sudo: true
+    ohai "Launcher script created: #{launcher} -> #{current_link}/bin/az"
 
-    # Check for older versions
+    # Notify about other installed versions
     versions_dir = "/usr/local/microsoft/azure-cli"
     version_dirs = Dir.glob("#{versions_dir}/[0-9]*").select { |f| File.directory?(f) }
     if version_dirs.length > 1
-      opoo "You have #{version_dirs.length} Azure CLI versions installed."
+      opoo "Multiple Azure CLI versions detected (#{version_dirs.length})."
       puts "Previous versions are preserved automatically."
-      puts "To remove old versions, run:"
+      puts "To clean up older versions, run:"
       puts "  sudo /usr/local/microsoft/azure-cli/cleanup-old-versions.sh"
     end
+
+    ohai "Azure CLI #{version} installed successfully!"
+    puts "Installation directory: #{version_dir}"
+    puts "Active version symlink: #{current_link} -> #{version_dir}"
+    puts "Launcher script: #{launcher} -> #{current_link}/bin/az"
   end
 
   uninstall_preflight do
@@ -61,7 +69,7 @@ cask "azure-cli-pr2" do
               "/usr/local/microsoft/azure-cli/cleanup-old-versions.sh",
             ]
 
-  # Preserve versioned directories to allow rollback
+  # Preserve version directories for rollback; `zap` removes all
   zap trash: "~/.azure",
       rmdir: "/usr/local/microsoft/azure-cli"
 
@@ -72,20 +80,19 @@ cask "azure-cli-pr2" do
       /usr/local/microsoft/azure-cli/#{version}/
 
     Active version symlink:
-      /usr/local/microsoft/azure-cli/current -> #{version}
+      /usr/local/microsoft/azure-cli/current -> /usr/local/microsoft/azure-cli/#{version}
 
     Launcher script:
       /usr/local/bin/az
 
-    Multiple versions can coexist side-by-side. When you upgrade, the previous
-    version will be preserved automatically.
+    Multiple versions can coexist side-by-side. Previous versions are preserved automatically.
 
     To remove old versions:
       sudo /usr/local/microsoft/azure-cli/cleanup-old-versions.sh
 
     To manually switch versions (advanced):
-      sudo ln -sf <version> /usr/local/microsoft/azure-cli/current
-      Example: sudo ln -sf 2.80.0 /usr/local/microsoft/azure-cli/current
+      sudo ln -sf /usr/local/microsoft/azure-cli/<version> /usr/local/microsoft/azure-cli/current
+      Example: sudo ln -sf /usr/local/microsoft/azure-cli/2.80.0 /usr/local/microsoft/azure-cli/current
 
     To verify installation:
       az --version
