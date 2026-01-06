@@ -5,12 +5,12 @@ class AzureCliTarball < Formula
   
   on_arm do
     url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-tarball/azure-cli-2.77.0-macos-arm64.tar.gz"
-    sha256 "bb7ae1032e0c43a498a60517dcebefde33a857b71bc325bda8b9d64fb9516356"
+    sha256 "d18b3f231fc9fb2fef01611c1e47b334289d8f76f6e9e82e7e0577c146cb20dc"
   end
   
   on_intel do
     url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-tarball/azure-cli-2.77.0-macos-x86_64.tar.gz"
-    sha256 "a7c8aaad47d7fd15e2b7c4d8b01762081f7bf8757c2425ac7c8795657018d049"
+    sha256 "a4fdd67fbd0bfad958768b435a2e01424e2c29a7bdc4344caee86014c5d2270d"
   end
   
   def install
