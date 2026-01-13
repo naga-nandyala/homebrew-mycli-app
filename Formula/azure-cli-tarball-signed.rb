@@ -3,15 +3,9 @@ class AzureCliTarballSigned < Formula
   homepage "https://learn.microsoft.com/cli/azure/"
   version "2.77.0"
   
-  on_arm do
-    url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-tarball-signed/azure-cli-2.77.0-macos-arm64-notarized.tar.gz"
-    sha256 "13310f29157cd1e51ea26dcc45ce152f9441aed88c3709793d2b36f78dbb0c31"
-  end
-  
-  on_intel do
-    url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-tarball-signed/azure-cli-2.77.0-macos-x86_64-notarized.tar.gz"
-    sha256 "430b2b68fcfb669d19d398e9c100cc393184339b0505fd7929538b2c83fad2e9"
-  end
+  # ARM64 (Apple Silicon) only - Intel Macs can use Rosetta 2
+  url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-tarball-signed/azure-cli-2.77.0-macos-arm64-notarized.tar.gz"
+  sha256 "b8b14fb044b2998f23813dd3c2c4100e0b841c47a753509e6c2cf31d6e9ba169"
   
   def install
     # Install signed and notarized tarball
