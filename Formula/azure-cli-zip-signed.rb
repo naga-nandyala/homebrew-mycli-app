@@ -1,21 +1,19 @@
 class AzureCliZipSigned < Formula
-  desc "Microsoft Azure CLI - Code-Signed & Notarized ZIP"
+  desc "Microsoft Azure CLI - Code-Signed & Notarized ZIP (ARM64 only)"
   homepage "https://learn.microsoft.com/cli/azure/"
   version "2.77.0"
   
   on_arm do
     url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-zip-tarball/azure-cli-2.77.0-macos-arm64-notarized.zip"
-    sha256 "ebc2f77921ec3defe5a06bb670537716b88b59a84ae3a7271799d7cbc1b28354"
-  end
-  
-  on_intel do
-    url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-zip-tarball/azure-cli-2.77.0-macos-x86_64-notarized.zip"
-    sha256 "daf9b5ffeade38c3d54654926080b6c2d87cdb8f428e6b85144343e6db9fece1"
+    sha256 "8ee8042cb173decc482af1de5e0a5a9b5855c4676ceface6b2a11baf6335c862"
   end
   
   def install
-    # Install signed and notarized ZIP
+    # ZIP structure matches tarball: bin/az -> symlink to ../libexec/bin/az
+    # Install everything as-is with symlinks preserved
     prefix.install Dir["*"]
+    
+    # Ensure executable permissions
     chmod 0755, bin/"az"
   end
   
