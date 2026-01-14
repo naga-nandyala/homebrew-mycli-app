@@ -5,7 +5,7 @@ class AzureCliTarballSigned < Formula
   
   # ARM64 (Apple Silicon) only - Intel Macs can use Rosetta 2
   url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-tarball-signed/azure-cli-2.77.0-macos-arm64-notarized.tar.gz"
-  sha256 "6576436f8585afac210dae3db7304a3502ee78eaab1d0ade5f7c70fdf8ff6dc1"
+  sha256 "90b66e112a43d3ca517c3bae3a1806b2638534bd018dd01c3125a5915b7c1545"
   
   def install
     # Install signed and notarized tarball
