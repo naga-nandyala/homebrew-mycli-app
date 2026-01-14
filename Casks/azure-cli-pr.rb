@@ -1,6 +1,6 @@
 cask "azure-cli-pr" do
   version "2.77.0"
-  sha256 "d0fb66606f4a231b116baf6a2c055713c2187fd80b5ca449c2878b6b13bb3958"
+  sha256 "14216caba61e2e23e3ad96a3e9ed9e5bfc0acfbb1d27b592b024f9a0c5e523a2"
 
   url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0/azure-cli-2.77.0-macos-arm64-notarized.pkg"
   name "Azure CLI PR"
