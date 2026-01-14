@@ -3,10 +3,9 @@ class AzureCliZipSigned < Formula
   homepage "https://learn.microsoft.com/cli/azure/"
   version "2.77.0"
   
-
+  # ARM64 only - no architecture conditionals needed
   url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-zip-tarball/azure-cli-2.77.0-macos-arm64-notarized.zip"
-  sha256 "4fbb35787f77d763534cbcd8a28ea4d3789b96ce1cd645e7c60fa4dae20a94dd"
-
+  sha256 "8363c7ae5cc843322edc962aa438f22044098e6f7dadce70ef21240a886cf0fc"
   
   def install
     # ZIP structure matches tarball: bin/az -> symlink to ../libexec/bin/az
