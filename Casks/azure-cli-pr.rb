@@ -1,15 +1,15 @@
 cask "azure-cli-pr" do
-  version "2.77.0"
-  sha256 "14216caba61e2e23e3ad96a3e9ed9e5bfc0acfbb1d27b592b024f9a0c5e523a2"
+  version "2.0.0"
+  sha256 "de60c6ea5221e58e4bd93671087cb1851fd3834be7cb300a7e2aad6e843ca833"
 
-  url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0/azure-cli-2.77.0-macos-arm64-notarized.pkg"
+  url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.0.0/azure-cli-2.0.0-macos-arm64-notarized.pkg"
   name "Azure CLI PR"
   desc "Microsoft Azure command-line interface (PKG installer)"
   homepage "https://learn.microsoft.com/cli/azure/"
 
   depends_on macos: ">= :catalina"
 
-  pkg "azure-cli-2.77.0-macos-arm64-notarized.pkg"
+  pkg "azure-cli-2.0.0-macos-arm64-notarized.pkg"
 
   uninstall pkgutil: "com.microsoft.azure-cli",
             delete:  [
