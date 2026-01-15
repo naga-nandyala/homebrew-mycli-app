@@ -21,7 +21,7 @@ class AzureCliTarballSigned < Formula
   
   def caveats
     <<~EOS
-      Azure CLI Signed Tarball has been installed!
+      Azure CLI Signed Tarball has been installed!  --- xxxxxxxxx updated xxxxxxx
       
       ✅ All binaries are code-signed with Apple Developer ID
       ✅ Notarized by Apple - No Gatekeeper warnings
