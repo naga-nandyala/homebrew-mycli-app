@@ -3,9 +3,8 @@ class AzureCliTarballSigned < Formula
   homepage "https://learn.microsoft.com/cli/azure/"
   version "2.77.0"
   
-  # ARM64 (Apple Silicon) only - Intel Macs can use Rosetta 2
-  url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-tarball-signed/azure-cli-2.77.0-macos-arm64-notarized.tar.gz"
-  sha256 "8695f539325dd084cc2bb30ecbe9b0ebe0cec88f2a4c696017c5b7b8fc0dd7d0"
+  url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-tarball-signed/azure-cli-2.77.0-macos-arm64-signed.tar.gz"
+  sha256 "31ab675e2fa5246979a7ba9897556b47f48323a7d3185bdf034cad76375cf8e4"
   
   def install
     # Install signed and notarized tarball
@@ -25,8 +24,8 @@ class AzureCliTarballSigned < Formula
       
       Installation Details:
         • Executable: #{bin}/az
-        • Runtime: #{prefix}/libexec/az/
-        • Python: Bundled Python 3.13.11
+        • Runtime: #{prefix}/libexec/
+        • Python: Bundled Python runtime
       
       This is a fully code-signed and notarized distribution.
       No quarantine issues with browser downloads!
