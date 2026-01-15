@@ -9,6 +9,10 @@ class AzureCliTarballSigned < Formula
   def install
     # Install signed and notarized tarball
     prefix.install Dir["*"]
+
+
+    # Ensure az wrapper is executable
+    chmod 0755, bin/"az"    
   end
   
   test do
