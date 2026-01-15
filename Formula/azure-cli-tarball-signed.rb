@@ -4,7 +4,7 @@ class AzureCliTarballSigned < Formula
   version "2.77.0"
   
   url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-tarball-signed/azure-cli-2.77.0-macos-arm64-signed.tar.gz"
-  sha256 "31ab675e2fa5246979a7ba9897556b47f48323a7d3185bdf034cad76375cf8e4"
+  sha256 "b97867e7712f5f73dfe2d8eacbe817706724fdb585cf486c92f24e32bd49ebd6"
   
   def install
     # Install signed and notarized tarball
