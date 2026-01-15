@@ -11,7 +11,7 @@ class AzureCliTarballSigned < Formula
     prefix.install Dir["*"]
 
 
-    # Ensure az wrapper is executable
+    # Ensure az wrapper is executable  
     chmod 0755, bin/"az"    
   end
   
