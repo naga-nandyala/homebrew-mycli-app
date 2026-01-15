@@ -1,8 +1,8 @@
 class AzureCliPr < Formula
   desc "Microsoft Azure CLI - Official command-line interface"
   homepage "https://learn.microsoft.com/cli/azure/"
-  url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.0.0/azure-cli-2.0.0-macos-arm64-notarized.pkg"
-  sha256 "de60c6ea5221e58e4bd93671087cb1851fd3834be7cb300a7e2aad6e843ca833"
+  url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0/azure-cli-2.77.0-macos-arm64-notarized.pkg"
+  sha256 "52dd232d49c890f06479640fb1f3dc78ee1dd1b04fe1636e3015524b79e95b0b"
 
   def install
     system "pkgutil", "--expand", cached_download, buildpath/"azure-cli.unpkg"
