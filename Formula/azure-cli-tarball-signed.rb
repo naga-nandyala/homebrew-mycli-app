@@ -16,8 +16,9 @@ class AzureCliTarballSigned < Formula
     # Reference: https://github.com/Homebrew/brew/issues/4080
     system "cp", "-R", ".", prefix
 
-    skip_relocation!  # Prevents Keg.relocate/re-signing ad-hoc signatures
-    
+    stable do
+      skip_relocation!  # Skips Keg relocation and ad-hoc re-signing
+    end
     # Ensure az wrapper is executable
     chmod 0755, bin/"az"
   end
