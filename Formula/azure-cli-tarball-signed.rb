@@ -7,8 +7,10 @@ class AzureCliTarballSigned < Formula
   sha256 "b97867e7712f5f73dfe2d8eacbe817706724fdb585cf486c92f24e32bd49ebd6"
   
   def install
-    # Direct untar into prefix - preserves code signatures
-    system "tar", "xzf", cached_download, "--directory=#{prefix}", "--strip-components=0", "--no-same-owner"
+    # Use cp -aRp to preserve extended attributes containing code signatures
+    # Native Homebrew methods strip xattrs from files >10MB, invalidating signatures
+    prefix.mkpath
+    system "cp", "-aRp", *Dir["*"], prefix
     chmod 0755, bin/"az"
   end
   
