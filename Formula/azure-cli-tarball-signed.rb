@@ -7,19 +7,8 @@ class AzureCliTarballSigned < Formula
   sha256 "b97867e7712f5f73dfe2d8eacbe817706724fdb585cf486c92f24e32bd49ebd6"
   
   def install
-    # Extract tarball structure:
-    #   bin/az (wrapper script)
-    #   libexec/ (Python runtime and libraries)
-    
-    # CRITICAL: Use shell cp to preserve code signatures
-    # Ruby's FileUtils.cp_r (used by prefix.install) strips signatures on large files
-    # Reference: https://github.com/Homebrew/brew/issues/4080
-    system "cp", "-R", ".", prefix
-
-    stable do
-      skip_relocation!  # Skips Keg relocation and ad-hoc re-signing
-    end
-    # Ensure az wrapper is executable
+    # Direct untar into prefix - preserves code signatures
+    system "tar", "xzf", cached_download, "--directory=#{prefix}", "--strip-components=0", "--no-same-owner"
     chmod 0755, bin/"az"
   end
   
