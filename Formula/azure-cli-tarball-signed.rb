@@ -15,6 +15,8 @@ class AzureCliTarballSigned < Formula
     # Ruby's FileUtils.cp_r (used by prefix.install) strips signatures on large files
     # Reference: https://github.com/Homebrew/brew/issues/4080
     system "cp", "-R", ".", prefix
+
+    skip_relocation!  # Prevents Keg.relocate/re-signing ad-hoc signatures
     
     # Ensure az wrapper is executable
     chmod 0755, bin/"az"
