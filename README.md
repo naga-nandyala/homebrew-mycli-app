@@ -1,6 +1,6 @@
 # Homebrew Tap for mycli-app
 
-This is the official Homebrew tap for `mycli-app`, a simple Azure-like CLI tool.
+Official Homebrew tap for `mycli-app`, a simple Azure-like CLI tool.
 
 ## Installation
 
@@ -10,25 +10,29 @@ brew install naga-nandyala/mycli-app/mycli-app
 
 ## Usage
 
-After installation, you can use the CLI:
-
 ```bash
-# Check version
-mycli --version
-
-# Login (demo mode)
-mycli login --demo
-
-# Get help
-mycli --help
+mycli --version              # Check version
+mycli login --demo           # Login (demo mode)
+mycli --help                 # Get help
 ```
 
-## About
+## Repository Structure
 
-- **Homepage**: https://github.com/naga-nandyala/mycli-app
-- **Releases**: https://github.com/naga-nandyala/mycli-app/releases
-- **Issues**: https://github.com/naga-nandyala/mycli-app/issues
+```
+Formula/     # Homebrew formulas for CLI installation
+Casks/       # Homebrew casks for package-based installation
+```
 
-## Formula Updates
+### Available Formulas
+- `mycli-app.rb` - Main binary installation (recommended)
+- `mycli-app-src.rb` - Source-based installation
+- `mycli-app-venv.rb` - Python virtual environment installation
 
-The formula in this tap is automatically updated when new releases are published to the main repository.
+### Available Casks
+- `mycli-app-pkg.rb` - macOS package installer
+- `mycli-app-venv.rb` - Virtual environment package
+
+## Links
+
+- Homepage: https://github.com/naga-nandyala/mycli-app
+- Releases: https://github.com/naga-nandyala/mycli-app/releases
