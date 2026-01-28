@@ -11,8 +11,5 @@ cask "azure-cli-v3" do
 
   binary "bin/az"
 
-  zsh_completion "libexec/share/zsh/site-functions/_az"
-  bash_completion "libexec/share/bash-completion/completions/az"
-
   zap trash: "~/.azure"
 end
