@@ -1,14 +1,14 @@
 cask "azure-cli-v3" do
-  version ""
+  version "2.77.0"
 
   on_arm do
-    sha256 "79df1de0ca594b7f6c79bb67353b1787d03ff0fc314677933adfe8ce22a6ba33"
-    url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v-v3/azure-cli--macos-arm64-nopython-signed-notarized.tar.gz"
+    sha256 "06e94ac5d9e8eade8a8caa59d3611729786cceb2746a03a13968e8f9a24dc2a9"
+    url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-v3/azure-cli-2.77.0-macos-arm64-nopython-signed-notarized.tar.gz"
   end
 
   on_intel do
-    sha256 "058dc96715f9c273e696a4ed70a2a78e4e9dae7f28f4b9cdfc1ee1efb8899422"
-    url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v-v3/azure-cli--macos-x86_64-nopython-signed-notarized.tar.gz"
+    sha256 "86651ab69a9ce260f9c655b6a30ed2271f9dc0a632986c3cdbb4d8071fbe6d4d"
+    url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-v3/azure-cli-2.77.0-macos-x86_64-nopython-signed-notarized.tar.gz"
   end
 
   name "Azure CLI"
