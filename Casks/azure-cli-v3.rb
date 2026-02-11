@@ -2,12 +2,12 @@ cask "azure-cli-v3" do
   version "2.77.0"
 
   on_arm do
-    sha256 "8798038e702d1f43f18b133c33ac2a8bdfa9984cd1e24bacef06407b08319c73"
+    sha256 "fd68bf63c38234f794b384490734cf6c503f8266856dea3b8436ce5b29e5fdc4"
     url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-v3/azure-cli-2.77.0-macos-arm64-nopython-signed-notarized.tar.gz"
   end
 
   on_intel do
-    sha256 "75b7937176e95ae6a910083d5940076a715e424a4fc393edfa60390d38afe779"
+    sha256 "3f3627cd2aa5d0e7498e5429b833c7a31c721a15fec2a3c4a69d5b206e792e7d"
     url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-v3/azure-cli-2.77.0-macos-x86_64-nopython-signed-notarized.tar.gz"
   end
 
