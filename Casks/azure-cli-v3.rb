@@ -3,8 +3,8 @@ cask "azure-cli-v3" do
   os macos: "macos"
 
   version "2.77.0"
-  sha256 arm:   "29845a184a1bb5f21f48ad48fcf90d059ed065cc92ef1162c1aa21c9ea616c05",
-         intel: "f53d0b5872b8fe3038d2d82692ec1f82fa8070d8b3f8643a04cb7ce5256557e8"
+  sha256 arm:   "f1ee54b388e2e395e543b19825e7f811dd6fa262d6d7536a850cd099b50aad95",
+         intel: "1e131bd0f0e8b4f07f008ddf1f0051a15342bb59de4eecae34cf22a4dfa2dea5"
 
   url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v#{version}-v3/azure-cli-#{version}-#{os}-#{arch}-nopython-signed-notarized.tar.gz"
   name "Azure CLI"
