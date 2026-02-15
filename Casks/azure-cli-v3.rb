@@ -1,19 +1,20 @@
 cask "azure-cli-v3" do
+  arch arm: "arm64", intel: "x86_64"
+  os macos: "macos"
+
   version "2.77.0"
+  sha256 arm:   "29845a184a1bb5f21f48ad48fcf90d059ed065cc92ef1162c1aa21c9ea616c05",
+         intel: "f53d0b5872b8fe3038d2d82692ec1f82fa8070d8b3f8643a04cb7ce5256557e8"
 
-  on_arm do
-    sha256 "1cc7f4ed4ce1fcb34e47d214d17851683d8230cb55caa5f5a7695db415db96d5"
-    url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-v3/azure-cli-2.77.0-macos-arm64-nopython-signed-notarized.tar.gz"
-  end
-
-  on_intel do
-    sha256 "8cad216c2cf1c1a9b6d095ffed8e0414ebd4516c58b03adb8f56945ed4c7c573"
-    url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v2.77.0-v3/azure-cli-2.77.0-macos-x86_64-nopython-signed-notarized.tar.gz"
-  end
-
+  url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/v#{version}-v3/azure-cli-#{version}-#{os}-#{arch}-nopython-signed-notarized.tar.gz"
   name "Azure CLI"
-  desc "Microsoft Azure CLI (Lightweight - uses Homebrew Python)"
-  homepage "https://docs.microsoft.com/cli/azure/"
+  desc "Microsoft Azure CLI 2.0"
+  homepage "https://docs.microsoft.com/cli/azure/overview"
+
+  livecheck do
+    url :url
+    strategy :github_latest
+  end
 
   depends_on formula: "python@3.13"
 
