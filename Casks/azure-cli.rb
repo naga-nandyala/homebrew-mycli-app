@@ -3,10 +3,10 @@ cask "azure-cli" do
   os macos: "macos"
 
   version "2.77.0"
-  sha256 arm:   "8c3c179b780933690507bb22ed004f6cb5236415edc146db9bb2b558920c6b8d",
-         intel: "aebb0b622a5e3be3eb5ac592cde5458168e7f62e90dccf2d9000c1b929e6ff53"
+  sha256 arm:   "8181d138c3daa7556090a120c0308e35e501d047466f76c4756e6ff00e7dfee7",
+         intel: "d2cbb41d2baf6354ea16c6ec6453886927619192c3b202b2f55556fbac8ce911"
 
-  url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/azure-cli-#{version}/azure-cli-#{version}-#{os}-#{arch}-nopython-signed-notarized.tar.gz"
+  url "https://github.com/naga-nandyala/azure-cli-pkg-1/releases/download/azure-cli-#{version}/azure-cli-#{version}-#{os}-#{arch}.tar.gz"
   name "Azure CLI"
   desc "Microsoft Azure CLI 2.0"
   homepage "https://docs.microsoft.com/cli/azure/overview"
