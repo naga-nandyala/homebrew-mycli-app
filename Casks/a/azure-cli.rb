@@ -3,8 +3,8 @@ cask "azure-cli" do
   os macos: "macos"
 
   version "2.84.0"
-  sha256 arm:   "1f173c4cae0321ce6546eef2aeabef099e016c1715b1473ea8536595b8a07ed6",
-         intel: "c793fb0a6e700ea6c5548e9f685ffbca8178f7f3aec5d8c94353f6c5e10abd23"
+  sha256 arm:   "5493fa2725a7d2bee602230e11bded624df2a00c3b8db37dadbadbef275d1c7b",
+         intel: "5498695a7fa89091bdab1a9b874dd3eec72f280cd1eee11abedc896d57d1b6a6"
 
   url "https://github.com/naga-nandyala/azure-cli-broker-new/releases/download/azure-cli-#{version}/azure-cli-#{version}-#{os}-#{arch}.tar.gz"
   name "Azure CLI"
@@ -19,6 +19,9 @@ cask "azure-cli" do
   depends_on formula: "python@3.13"
 
   binary "bin/az"
+  zsh_completion "completions/zsh/_az"
+  bash_completion "completions/bash/az"
+  fish_completion "completions/fish/az.fish"
 
   zap trash: "~/.azure"
 end
