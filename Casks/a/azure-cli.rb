@@ -45,10 +45,10 @@ cask "azure-cli" do
 
   depends_on formula: "python@3.13"
 
-#   binary "bin/az"
-#   zsh_completion "completions/zsh/_az"
-#   bash_completion "completions/bash/az"
-#   fish_completion "completions/fish/az.fish"
+  binary "bin/az"
+  zsh_completion "completions/zsh/_az"
+  bash_completion "completions/bash/az"
+  fish_completion "completions/fish/az.fish"
 
-#   zap trash: "~/.azure"
-# end
+  zap trash: "~/.azure"
+end
