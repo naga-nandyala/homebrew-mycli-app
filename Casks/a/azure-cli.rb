@@ -2,8 +2,8 @@ cask "azure-cli" do
   arch arm: "arm64", intel: "x86_64"
 
   version "2.88.0"
-  sha256 arm:   "c8b1e881221d17c5465da809bf39e0d165f68002d8367d17bc0dc19aa22077a6",
-         intel: "497db1c775aa96f8ca69d7b4187f9916fdb75f42378dd866fec2e4b27922a21b"
+  sha256 arm:   "30f27075dc8bf965a15e05381fbbae42ca4060326100c6d097581cd0e330b251",
+         intel: "8945009a23dcd7b3a26c2dda26948c0fd70478343b4d8fe19e2e75e4135e8c82"
 
   url "https://github.com/naga-nandyala/azure-cli-broker-2/releases/download/azure-cli-#{version}/azure-cli-#{version}-macos-#{arch}.tar.gz",
       verified: "github.com/naga-nandyala/azure-cli-broker-2/"
