@@ -1,12 +1,12 @@
 cask "azure-cli" do
   arch arm: "arm64", intel: "x86_64"
-  os macos: "macos"
 
-  version "2.84.0"
-  sha256 arm:   "74a4ea078ac381cba7da07a09bb485c9d4ac3f7d295af7db518ca657ec54ed06",
-         intel: "8c76df8435067316c8c394dd0e0f1953bfbf25198e7581842d6639c05ddd5166"
+  version "2.88.0"
+  sha256 arm:   "c8b1e881221d17c5465da809bf39e0d165f68002d8367d17bc0dc19aa22077a6",
+         intel: "497db1c775aa96f8ca69d7b4187f9916fdb75f42378dd866fec2e4b27922a21b"
 
-  url "https://github.com/naga-nandyala/azure-cli-broker-new/releases/download/azure-cli-#{version}/azure-cli-#{version}-#{os}-#{arch}.tar.gz"
+  url "https://github.com/naga-nandyala/azure-cli-broker-2/releases/download/azure-cli-#{version}/azure-cli-#{version}-macos-#{arch}.tar.gz",
+      verified: "github.com/naga-nandyala/azure-cli-broker-2/"
   name "Azure CLI"
   desc "Microsoft Azure CLI 2.0"
   homepage "https://docs.microsoft.com/cli/azure/overview"
@@ -16,12 +16,12 @@ cask "azure-cli" do
     strategy :github_latest
   end
 
-  depends_on formula: "python@3.13"
+  depends_on formula: "python@3.14"
 
   binary "bin/az"
-  zsh_completion "completions/zsh/_az"
   bash_completion "completions/bash/az"
   fish_completion "completions/fish/az.fish"
+  zsh_completion "completions/zsh/_az"
 
   zap trash: "~/.azure"
 end
