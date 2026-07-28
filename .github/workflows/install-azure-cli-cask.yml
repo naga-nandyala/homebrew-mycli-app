@@ -1,0 +1,22 @@
+name: Install azure-cli from custom tap
+
+on:
+  workflow_dispatch:
+
+jobs:
+  install-from-tap:
+    runs-on: macos-latest
+    steps:
+      - name: Uninstall any existing azure-cli
+        run: |
+          brew uninstall --cask azure-cli || true
+          brew uninstall --formula azure-cli || true
+
+      - name: Tap naga-nandyala/homebrew-mycli-app
+        run: brew tap naga-nandyala/homebrew-mycli-app
+
+      - name: Install azure-cli cask
+        run: brew install --cask azure-cli
+
+      - name: Verify installation
+        run: az --version
