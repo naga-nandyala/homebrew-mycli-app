@@ -1,0 +1,47 @@
+name: Verify Intel-Mac broker gate
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify-intel-gate:
+    # macos-13 is the Intel (x86_64) runner; macos-14/15 are Apple Silicon.
+    runs-on: macos-13
+    steps:
+      - name: Checkout (for verify script)
+        uses: actions/checkout@v4
+
+      - name: Show runner architecture
+        run: |
+          echo "uname -m: $(uname -m)"
+
+      - name: Uninstall any existing azure-cli
+        run: brew uninstall --force azure-cli || true
+
+      - name: Tap naga-nandyala/homebrew-mycli-app
+        run: brew tap naga-nandyala/homebrew-mycli-app
+
+      - name: Trust the tap
+        run: brew trust naga-nandyala/homebrew-mycli-app
+
+      - name: Install azure-cli cask
+        run: brew install --cask azure-cli
+
+      - name: Enable broker on macOS flag
+        run: az config set core.enable_broker_on_mac=true
+
+      - name: Verify PR #926 Intel-Mac broker gate
+        run: |
+          set -euo pipefail
+          CASKROOM="$(brew --caskroom)/azure-cli"
+          SP="$(find "$CASKROOM" -type d -path '*/site-packages' | head -1)"
+          echo "Bundled site-packages: $SP"
+          test -n "$SP" || { echo "site-packages not found"; exit 1; }
+          test -f "$SP/msal/application.py" || { echo "msal/application.py not found"; exit 1; }
+
+          echo "== Static check: sentinel present in shipped application.py =="
+          grep -q "Broker is not supported on Intel-based Macs." "$SP/msal/application.py"
+
+          echo "== Runtime check: exercise the shipped msal on this Intel host =="
+          PY="$(brew --prefix python@3.14)/bin/python3.14"
+          PYTHONPATH="$SP" "$PY" .github/scripts/verify_intel_broker_gate.py
