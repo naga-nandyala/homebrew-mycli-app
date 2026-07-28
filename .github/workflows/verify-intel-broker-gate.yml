@@ -24,7 +24,7 @@ jobs:
         run: brew tap naga-nandyala/homebrew-mycli-app
 
       - name: Trust the tap
-        run: brew trust naga-nandyala/homebrew-mycli-app
+        run: brew trust --tap naga-nandyala/homebrew-mycli-app
 
       - name: Install azure-cli cask
         run: brew install --cask azure-cli
