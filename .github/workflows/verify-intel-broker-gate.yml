@@ -15,6 +15,9 @@ jobs:
       - name: Show runner architecture
         run: echo "uname -m = $(uname -m)"
 
+      - name: Install coreutils (for gtimeout)
+        run: brew install coreutils
+
       - name: Uninstall any existing azure-cli
         run: brew uninstall --force azure-cli || true
 
@@ -50,34 +53,21 @@ jobs:
           set -uo pipefail
           LOG="$(mktemp)"
           SENTINEL="Broker is not supported on Intel-based Macs."
-          echo "Running 'az login --debug' with broker enabled; expecting the Intel fallback warning..."
-          # az login is interactive; run it in the background and stop once the
-          # broker decision (emitted at MSAL app construction, before any prompt)
-          # has been logged. macOS runners have no GNU 'timeout', hence polling.
-          az login --debug >"$LOG" 2>&1 &
-          PID=$!
-          FOUND=0
-          for i in $(seq 1 120); do
-            if grep -q "$SENTINEL" "$LOG"; then
-              FOUND=1
-              break
-            fi
-            if ! kill -0 "$PID" 2>/dev/null; then
-              break
-            fi
-            sleep 1
-          done
-          kill "$PID" 2>/dev/null || true
-          wait "$PID" 2>/dev/null || true
+          echo "Running 'az login --debug' with broker enabled (30s timeout; no input provided)..."
+          # az login is interactive. gtimeout stops it after 30s. The broker
+          # decision (and its warning) is emitted at MSAL app construction,
+          # before any interactive prompt, so 30s is more than enough.
+          gtimeout --signal=INT 30 az login --debug >"$LOG" 2>&1 || true
 
           echo "==== broker-related lines from az login --debug ===="
           grep -i "broker" "$LOG" || true
           echo "===================================================="
 
-          if [ "$FOUND" -ne 1 ]; then
+          if grep -q "$SENTINEL" "$LOG"; then
+            echo "PASS: az login logged the fallback and continued on the non-broker path"
+          else
             echo "FAIL: az login did NOT emit the Intel broker fallback warning"
             echo "---- log tail ----"
             tail -n 60 "$LOG"
             exit 1
           fi
-          echo "PASS: az login logged the fallback and continued on the non-broker path"
