@@ -39,8 +39,45 @@ jobs:
           test -n "$SP" || { echo "site-packages not found"; exit 1; }
           test -f "$SP/msal/application.py" || { echo "msal/application.py not found"; exit 1; }
 
-          # Behavioral test only: import the SHIPPED msal and actually run the
-          # broker decision on real Intel hardware. No grepping -- the gate must
-          # flip app._enable_broker to False and log the fallback warning.
+          # Behavioral test: import the SHIPPED msal and actually run the broker
+          # decision on real Intel hardware. The gate must flip _enable_broker to
+          # False and log the fallback warning.
           PY="$(brew --prefix python@3.14)/bin/python3.14"
           PYTHONPATH="$SP" "$PY" .github/scripts/verify_intel_broker_gate.py
+
+      - name: End-to-end az login broker fallback (real Intel)
+        run: |
+          set -uo pipefail
+          LOG="$(mktemp)"
+          SENTINEL="Broker is not supported on Intel-based Macs."
+          echo "Running 'az login --debug' with broker enabled; expecting the Intel fallback warning..."
+          # az login is interactive; run it in the background and stop once the
+          # broker decision (emitted at MSAL app construction, before any prompt)
+          # has been logged. macOS runners have no GNU 'timeout', hence polling.
+          az login --debug >"$LOG" 2>&1 &
+          PID=$!
+          FOUND=0
+          for i in $(seq 1 120); do
+            if grep -q "$SENTINEL" "$LOG"; then
+              FOUND=1
+              break
+            fi
+            if ! kill -0 "$PID" 2>/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          kill "$PID" 2>/dev/null || true
+          wait "$PID" 2>/dev/null || true
+
+          echo "==== broker-related lines from az login --debug ===="
+          grep -i "broker" "$LOG" || true
+          echo "===================================================="
+
+          if [ "$FOUND" -ne 1 ]; then
+            echo "FAIL: az login did NOT emit the Intel broker fallback warning"
+            echo "---- log tail ----"
+            tail -n 60 "$LOG"
+            exit 1
+          fi
+          echo "PASS: az login logged the fallback and continued on the non-broker path"
