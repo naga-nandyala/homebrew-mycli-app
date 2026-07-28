@@ -8,12 +8,13 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Uninstall any existing azure-cli
-        run: |
-          brew uninstall --cask azure-cli || true
-          brew uninstall --formula azure-cli || true
+        run: brew uninstall --force azure-cli || true
 
       - name: Tap naga-nandyala/homebrew-mycli-app
         run: brew tap naga-nandyala/homebrew-mycli-app
+
+      - name: Trust the tap
+        run: brew trust naga-nandyala/homebrew-mycli-app
 
       - name: Install azure-cli cask
         run: brew install --cask azure-cli
