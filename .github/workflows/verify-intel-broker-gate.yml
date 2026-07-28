@@ -30,7 +30,7 @@ jobs:
       - name: Enable broker on macOS flag
         run: az config set core.enable_broker_on_mac=true
 
-      - name: Verify PR #926 Intel-Mac broker gate (real Intel)
+      - name: Verify PR #926 Intel-Mac broker gate (real Intel, behavioral)
         run: |
           set -euo pipefail
           CASKROOM="$(brew --caskroom)/azure-cli"
@@ -39,9 +39,8 @@ jobs:
           test -n "$SP" || { echo "site-packages not found"; exit 1; }
           test -f "$SP/msal/application.py" || { echo "msal/application.py not found"; exit 1; }
 
-          echo "== Static check: sentinel present in shipped application.py =="
-          grep -q "Broker is not supported on Intel-based Macs." "$SP/msal/application.py"
-
-          echo "== Runtime check: exercise shipped msal on real Intel hardware =="
+          # Behavioral test only: import the SHIPPED msal and actually run the
+          # broker decision on real Intel hardware. No grepping -- the gate must
+          # flip app._enable_broker to False and log the fallback warning.
           PY="$(brew --prefix python@3.14)/bin/python3.14"
           PYTHONPATH="$SP" "$PY" .github/scripts/verify_intel_broker_gate.py
