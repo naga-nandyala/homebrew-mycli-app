@@ -1,15 +1,13 @@
-name: Verify Intel-Mac broker gate (simulated)
+name: Verify Intel-Mac broker gate
 
 on:
   workflow_dispatch:
 
 jobs:
   verify-intel-gate:
-    # GitHub no longer offers free Intel macOS runners, so run on the default
-    # Apple Silicon runner and simulate an Intel host via AZ_TEST_FORCE_MACHINE.
-    # (If you have a real Intel runner, set runs-on accordingly; the override
-    # then becomes a harmless no-op.)
-    runs-on: macos-latest
+    # Real Intel (x86_64) macOS hardware -- no mocking. macos-15-intel is a
+    # standard GitHub-hosted Intel runner (free/unlimited on public repos).
+    runs-on: macos-15-intel
     steps:
       - name: Checkout (for verify script)
         uses: actions/checkout@v4
@@ -32,9 +30,7 @@ jobs:
       - name: Enable broker on macOS flag
         run: az config set core.enable_broker_on_mac=true
 
-      - name: Verify PR #926 Intel-Mac broker gate (simulated Intel)
-        env:
-          AZ_TEST_FORCE_MACHINE: x86_64
+      - name: Verify PR #926 Intel-Mac broker gate (real Intel)
         run: |
           set -euo pipefail
           CASKROOM="$(brew --caskroom)/azure-cli"
@@ -46,6 +42,6 @@ jobs:
           echo "== Static check: sentinel present in shipped application.py =="
           grep -q "Broker is not supported on Intel-based Macs." "$SP/msal/application.py"
 
-          echo "== Runtime check: exercise shipped msal with simulated Intel arch =="
+          echo "== Runtime check: exercise shipped msal on real Intel hardware =="
           PY="$(brew --prefix python@3.14)/bin/python3.14"
           PYTHONPATH="$SP" "$PY" .github/scripts/verify_intel_broker_gate.py

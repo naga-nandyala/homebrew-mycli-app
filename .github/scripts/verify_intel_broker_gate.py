@@ -2,13 +2,8 @@
 
 Constructs a PublicClientApplication with broker enabled -- the exact broker
 decision that ``az login`` performs -- fully offline, with no interactive or
-device-code login.
-
-GitHub no longer offers free Intel (x86_64) macOS runners, so set
-``AZ_TEST_FORCE_MACHINE=x86_64`` to simulate an Intel host: it overrides
-``platform.machine()`` (the single input the gate branches on) so the Intel
-branch of the *unmodified* shipped application.py runs. On a real Intel host
-the override is a harmless no-op.
+device-code login. No mocking: this must run on genuine Intel (x86_64) macOS
+hardware so ``platform.machine()`` naturally reports an Intel arch.
 
 Pass criteria (both required):
   1. ``app._enable_broker`` is False after construction.
@@ -17,7 +12,6 @@ Pass criteria (both required):
 
 import io
 import logging
-import os
 import platform
 import sys
 
@@ -26,24 +20,17 @@ FAKE_CLIENT_ID = "00000000-0000-0000-0000-000000000000"
 
 
 def main() -> int:
-    real_machine = platform.machine()
-    forced = os.environ.get("AZ_TEST_FORCE_MACHINE")
-    if forced:
-        platform.machine = lambda: forced  # noqa: E731 - simulate CPU arch
-    effective = platform.machine()
-
-    print(f"real platform.machine()        = {real_machine}")
-    print(f"forced (AZ_TEST_FORCE_MACHINE) = {forced or '(none)'}")
-    print(f"effective platform.machine()   = {effective}")
-    print(f"sys.platform                   = {sys.platform}")
+    machine = platform.machine()
+    print(f"platform.machine() = {machine}")
+    print(f"sys.platform       = {sys.platform}")
 
     if sys.platform != "darwin":
         print("ERROR: this check must run on macOS (sys.platform=='darwin')", file=sys.stderr)
         return 2
-    if effective not in ("x86_64", "i386"):
+    if machine not in ("x86_64", "i386"):
         print(
-            "ERROR: effective machine is not Intel; set AZ_TEST_FORCE_MACHINE=x86_64 "
-            f"to simulate (got {effective!r})",
+            f"ERROR: expected genuine Intel hardware, got machine={machine!r}. "
+            "Run this job on a real Intel runner (e.g. macos-15-intel).",
             file=sys.stderr,
         )
         return 2
@@ -78,7 +65,7 @@ def main() -> int:
     print("--------------------------------")
 
     if enabled is not False:
-        print("FAIL: broker was NOT disabled on (simulated) Intel Mac", file=sys.stderr)
+        print("FAIL: broker was NOT disabled on Intel Mac", file=sys.stderr)
         return 1
     if SENTINEL not in logs:
         print(f"FAIL: expected warning not logged: {SENTINEL!r}", file=sys.stderr)
