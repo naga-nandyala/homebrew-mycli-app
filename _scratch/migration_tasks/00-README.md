@@ -24,13 +24,22 @@ Homebrew **formula** (`homebrew-core`) to a **cask** (`homebrew-cask`).
   [PR #257931](https://github.com/Homebrew/homebrew-cask/pull/257931).
 - The cask's `depends_on formula: "python@3.14"` triggers a `[y/n]` prompt
   interactively; this is **normal** (official `gcloud-cli` behaves identically)
-  and is **auto-skipped in CI** (no TTY) or with `HOMEBREW_NO_ASK=1` / `-y`.- homebrew-cask's `tap_migrations.json` **already maps** `\"azure-cli\": \"homebrew/core\"`
+  and is **auto-skipped in CI** (no TTY) or with `HOMEBREW_NO_ASK=1` / `-y`.
+- homebrew-cask's `tap_migrations.json` **already maps** `"azure-cli": "homebrew/core"`
   (a historical reverse migration). Task 3 **must delete** this line or the new
   cask stays shadowed/unreachable — verified locally 2026-07-28.
 - End-to-end local test passed (2026-07-28, Apple Silicon): style ✅, install ✅
   (`az version` → 2.88.0), uninstall ✅. New-cask audit's **only** failure is the
   expected core-formula token conflict, which clears when Task 2 removes the
   formula — proving the two PRs must merge **together**.
+- Migration simulation passed (2026-08-06, Apple Silicon, cask v2.89.0 matching
+  the current formula): with the formula removed + core migration added, plain
+  `brew install azure-cli` resolved to and installed the **cask**; `az` ran from
+  the Caskroom; `~/.azure` preserved. The auto-migration **trigger** runs inside
+  `brew update` (not `brew upgrade`); we verified the mapping is wired but did
+  not force `brew update` on the live taps — end-to-end migration is confirmable
+  only once the paired PRs are merged.
+
 ## Reference
 
 - Prior maintainer guidance: <https://github.com/Homebrew/homebrew-cask/pull/257931>
