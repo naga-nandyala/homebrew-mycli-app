@@ -31,8 +31,8 @@ Microsoft-signed and Apple-notarized** tarball from the official
 
 ## Why are we doing this?
 
-Azure CLI is introducing **broker-based authentication**, which depends on a
-component (`pymsalruntime` / `msal[broker]`) that is **not open-source** and
+Azure CLI is **soon** introducing **broker-based authentication**, which depends
+on a component (`pymsalruntime` / `msal[broker]`) that is **not open-source** and
 therefore cannot be built from source. Homebrew-core only accepts dependencies
 that build from source, so the full Azure CLI (with broker auth) is distributed
 as a **cask** with all dependencies bundled.
