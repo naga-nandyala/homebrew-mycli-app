@@ -54,7 +54,7 @@ brew update && brew upgrade azure-cli
 - **You do NOT need `brew install --cask azure-cli`.** After migration,
   `azure-cli` exists only in `homebrew-cask`, so plain `brew install azure-cli`
   resolves to it automatically. (If you prefer being explicit,
-  `brew install --cask azure-cli` also works — it's just not required.)
+  `brew install --cask azure-cli` also works.)
 - **Already have Azure CLI installed via the formula?** On your next
   `brew update`, Homebrew's migrator moves you to the cask automatically —
   no manual steps needed in the normal case.
@@ -63,8 +63,9 @@ brew update && brew upgrade azure-cli
 
   ```bash
   brew uninstall azure-cli   # your ~/.azure config is kept
+  brew cleanup azure-cli     # clears stale cached artifacts
   brew update
-  brew install azure-cli     # installs the cask; no --cask needed
+  brew install azure-cli     # installs the cask
   az version
   ```
 
@@ -84,15 +85,8 @@ brew update && brew upgrade azure-cli
 
 ## 🐞 Known issues & how to report them
 
-If you run into any of the following, please let us know **in this issue thread**:
-
-- `brew install azure-cli` still installing/keeping the old formula version.
-- `az` command not found after upgrade, or a stale version reported by
-  `az version`.
-- Errors mentioning `--cask`, "both a cask and formula", or
-  "No available formula/cask".
-- Authentication (broker/login) errors after upgrading.
-- Shell completion (bash/zsh/fish) no longer working.
+If anything doesn't work as expected after the migration, please raise an issue
+and include the diagnostic output below.
 
 ### Please include this diagnostic output
 
@@ -106,17 +100,15 @@ az version
 which -a az
 ```
 
-<details>
-<summary>Optional: fully reset and reinstall (only if asked)</summary>
+### Fully reset and reinstall
 
 ```bash
 brew uninstall azure-cli
+brew cleanup azure-cli
 brew update
 brew install azure-cli
 az version
 ```
-
-</details>
 
 ---
 
